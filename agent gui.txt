@@ -1,0 +1,89 @@
+from tkinter import*
+from tkinter  import*
+from tkinter import messagebox
+import json
+# -*- coding: utf-8 -*-
+#create window object
+window =Tk ()
+window.geometry('800x500')
+window.title('وكيل الطيران الذكي')
+window.configure(bg="#4C787E")
+with open("Agent.json","r")as f:
+    content =json.loads(f.read())
+def show_data():
+    txt .delete(0.0, "end")
+    txtName = ent.get()
+    sentense = content
+    if (int(content["Temperature degree"]["value"]) == 710):
+
+       sentense = " درجة الحرارة مرتفعة الرجاء الهبوط في مدة لاتتجاوز 15 دقيقة"
+       Extinguishing={
+          "name ":"Extinguishing system ",
+          "value" : 1
+       }
+       with open("Extinguishing.json", "w")as write_file:
+          json.dump(Extinguishing,write_file)
+    #txt.insert(0.0, sentense,)
+    if(int(content["Temperature degree"]["value"]) >= 730):
+       sentense = " درجة الحرارة مرتفعة الرجاء الهبوط مباشرة\n "
+       Extinguishing={
+          "name ":"Extinguishing system ",
+          "value" : 1
+       }
+       with open("Extinguishing.json", "w")as write_file:
+          json.dump(Extinguishing,write_file)
+    txt.insert(0.0, sentense,)
+
+    if (str(content["landing gear light"]["value"]) == 'red'):
+        sentense = "لقد فشل انزال الاطارات\n لقد تم تشغيل النظام الهيدروليكي لدفع الإطارات \n "
+        hydraulic = {
+            "name ": "The hydraulic system ",
+            "value": 1
+        }
+        with open("hydraulic.json", "w")as write_file:
+            json.dump(hydraulic, write_file)
+    #txt.insert(0.0, sentense)
+    if (str(content["landing gear light"]["value"]) == 'blue'):
+        sentense = "لقد تم انزال الاطارات بنجاح\n "
+        hydraulic = {
+            "name ": "The hydraulic system ",
+            "value": 0
+        }
+        with open("hydraulic.json", "w")as write_file:
+            json.dump(hydraulic, write_file)
+    txt.insert(0.0, sentense)
+
+    if (int(content["the height"]["value"]) <= 4000):
+       sentense = "سيتم تذويد الطائرة بالاوكسجين من الجو\n"
+       oxegen = {
+            "name ": "Oxygen cylinder ",
+            "value":"0%"
+       }
+       with open("oxegen.json", "w")as write_file:
+            json.dump(oxegen, write_file)
+    elif(int(content["the height"]["value"]) == 5000):
+      sentense = "سيتم تذويد الطائرة باوكسجين مخلوط\n"
+      oxegen = {
+            "name ": "Oxygen cylinder ",
+            "value":"50%"
+      }
+      with open("oxegen.json", "w")as write_file:
+           json.dump(oxegen, write_file)
+    else:
+      sentense = "سيتم تذويد الطائرة باوكسجين صافي من الاسطوانة\n"
+      oxegen = {
+        "name ": "Oxygen cylinder ",
+        "value": "100%"
+      }
+      with open("oxegen.json", "w")as write_file:
+         json.dump(oxegen, write_file)
+    txt.insert(0.0, sentense)
+ent =Entry (window )
+txt =Text (window ,width=40,height=10,font=("Monospace", 20),bg="#4C787E",padx=100,pady=5)
+txt.grid (row=1,column=100)
+#Define buttons
+b1=Button(window,text="فحص", width=25,bg="green",command=show_data,font=21)
+b1.grid(row=30,column=100)
+b3=Button(window,text="خروج", width=25,bg="red",command=exit,font=21)
+b3.grid(row=31, column=100)
+window.mainloop()
