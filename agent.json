@@ -1,1 +1,14 @@
-{"Temperature degree": "770", "the height": 4000, "landing gear light": "blue"}
+[
+{
+  "system name":"landing gear system",
+  "landing gear light":"red"
+},
+{
+  "system name":"oxegen system",
+  "the height":4000
+},
+{
+  "system name":"TEMPERATURE SYSTEM",
+  "Temperature degree":700
+}
+]
